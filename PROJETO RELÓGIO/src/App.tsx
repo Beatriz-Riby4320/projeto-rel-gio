@@ -1,15 +1,24 @@
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import horarioAtual from './utils/tempo';
 
-import './App.css'
-import horarioAtual from './utils/tempo'
-function App() {
-  
+const App: React.FC = () => {
+  const [hora, setHora] = useState<string>(() => horarioAtual());
+
+  useEffect(() => {
+    const intervalo = setInterval(() => {
+      setHora(horarioAtual());
+    }, 1000);
+
+    return () => clearInterval(intervalo);
+  }, []);
 
   return (
-    <>
-     <h1> Relógio</h1>
-      <h2>Hora atual: {horarioAtual()}</h2>
-    </>
-  )
-}
+    <div className="App">
+      <h1>Relógio</h1>
+      <h2>Hora atual: {hora}</h2>
+    </div>
+  );
+};
 
-export default App
+export default App;
